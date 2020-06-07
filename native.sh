@@ -11,24 +11,26 @@ fi
 echo >>./conf_files/conf_log.txt
 time=$(date "+%Y/%m/%d-%H:%M:%S")
 echo configuration starting at $time >>./conf_files/conf_log.txt
+echo ================================ >>./conf_files/conf_log.txt
+
+$workdir=$(pwd) 
 
 # The output of all these installation steps is noisy. With this utility
 # the progress report is nice and concise.
 function install {
     echo installing $1...
     shift
-    apt-get -y install "$@" >>./conf_files/conf_log.txt #2>&1
+    apt-get -y install "$@" >>$workdir/conf_files/conf_log.txt #2>&1
 }
 function doing {
     echo doing $@...
-    "$@" >>./conf_files/conf_log.txt #2>&1
+    "$@" >>$workdir/conf_files/conf_log.txt #2>&1
 }
 
 doing apt-add-repository -y ppa:brightbox/ruby-ng
 doing apt-get -y update
 
-
-install 'development tools' build-essential dkms curl libxslt-dev libpq-dev python-dev python-pip python-feedvalidator python-software-properties python-sphinx libmariadbclient-dev libcurl4-gnutls-dev libevent-dev libffi-dev libssl-dev stunnel4 libsqlite3-dev
+install 'development tools' build-essential dkms curl libxslt-dev libpq-dev python-dev libmariadbclient-dev libcurl4-gnutls-dev libevent-dev libffi-dev libssl-dev stunnel4 libsqlite3-dev
 install 'Git' git
 
 #install ruby
@@ -45,11 +47,11 @@ doing exec $SHELL
 doing rbenv install 2.3.1
 doing rbenv global 2.3.1
 gem install bundler
-cd $OLDPWD
+cd $workdir
 
 #config mySQL
-doing sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
-doing sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
+doing sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password rootPass'
+doing sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password rootPass'
 install 'MySQL' mysql-client mysql-server libmysqlclient-dev -f
 
 sudo mysql -u root -p rootPass <<SQL
@@ -157,4 +159,4 @@ cd ..
 
 sudo bower install --allow-root
 echo 'all set, welcome to OpenDSA project!'
-echo "your password for mysql is 'root', you should change it later"
+echo "your password for mysql is 'rootPass', you should change it later"
