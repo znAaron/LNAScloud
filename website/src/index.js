@@ -1,3 +1,5 @@
+//display functions
+//========================
 //system funcitons
 let sidebarCollapseChange = function() {
     if (document.body.clientWidth < 576) {
@@ -5,7 +7,7 @@ let sidebarCollapseChange = function() {
     } else {
         $("#side-navbar").addClass("show");
     }
-};
+}
 
 window.onresize = sidebarCollapseChange;
 
@@ -21,17 +23,3 @@ let sidetabHover = function() {
         }
     );
 }
-
-$(document).ready(
-    sidetabHover,
-
-    $.post('/rootDir',function(data){
-        alert(data);
-    })
-      .done(function(obj){
-        console.log(obj.responseText);
-      })
-      .fail(function(obj){
-        console.log(obj.responseText);
-      })
-)

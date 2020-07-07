@@ -19,7 +19,7 @@ func main() {
 	server.Static("/file", "./server/files")
 	//handlers
 	server.GET("/", frontPage)
-	server.POST("/rootDir", getRoot)
+	server.GET("/rootDir", getRoot)
 	//start the server
 	server.Run(":8080")
 }
