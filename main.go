@@ -2,7 +2,6 @@ package main
 
 import (
 	"net/http"
-	"encoding/json"
 
 	"github.com/gin-gonic/gin"
 	"github.com/znAaron/LNAScloud/server"
@@ -20,15 +19,17 @@ func main() {
 	server.Static("/file", "./server/files")
 	//handlers
 	server.GET("/", frontPage)
+	server.POST("/rootDir", getRoot)
 	//start the server
 	server.Run(":8080")
 }
 
 //display the front page
-func frontPage(context *gin.Context) {
-	context.HTML(http.StatusOK, "index.html", gin.H{})
+func frontPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "index.html", gin.H{})
 }
 
-func getRoot() {
+func getRoot(c *gin.Context) {
 	rootDir := server.InitiateRoot()
+	c.JSON(200, rootDir)
 }

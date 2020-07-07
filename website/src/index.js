@@ -1,5 +1,3 @@
-//avoid using jquery for better performance
-
 //system funcitons
 let sidebarCollapseChange = function() {
     if (document.body.clientWidth < 576) {
@@ -25,5 +23,15 @@ let sidetabHover = function() {
 }
 
 $(document).ready(
-    sidetabHover
+    sidetabHover,
+
+    $.post('/rootDir',function(data){
+        alert(data);
+    })
+      .done(function(obj){
+        console.log(obj.responseText);
+      })
+      .fail(function(obj){
+        console.log(obj.responseText);
+      })
 )

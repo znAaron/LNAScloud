@@ -14,8 +14,9 @@ type Folder struct {
 }
 
 //InitiateRoot creates an empty root folder
-func InitiateRoot() (rootDir *Folder) {
+func InitiateRoot() *Folder {
+	rootDir := Folder{}
 	rootDir.name = "user_root"
 	rootDir.modTime = time.Now()
-	return
+	return &rootDir
 }
