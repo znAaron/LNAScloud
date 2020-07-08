@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/znAaron/LNAScloud/server"
+	nasfile "github.com/znAaron/LNAScloud/server"
 )
 
 func main() {
@@ -20,6 +20,7 @@ func main() {
 	//handlers
 	server.GET("/", frontPage)
 	server.GET("/rootDir", getRoot)
+	server.GET("/dir", nasfile.GetDir)
 	//start the server
 	server.Run(":8080")
 }
@@ -30,6 +31,6 @@ func frontPage(c *gin.Context) {
 }
 
 func getRoot(c *gin.Context) {
-	rootDir := server.InitiateRoot()
+	rootDir := nasfile.InitiateRoot()
 	c.JSON(200, rootDir)
 }

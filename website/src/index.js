@@ -23,3 +23,5 @@ let sidetabHover = function() {
         }
     );
 }
+
+$(document).ready(sidetabHover)
